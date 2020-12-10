@@ -1,0 +1,40 @@
+FloatLayout:
+    Background:
+        id: background
+        canvas.before:
+            Color:
+                rgba: 117/255.0, 213/255.0, 227/255.0, 1
+            Rectangle:
+                size: self.width, self.height
+                pos:0, 0
+            Rectangle:
+                size: 200, 150
+                pos: self.width / 2.0 - self.size[0], self.height - self.size[1]
+    Button:
+        id: start_button
+        text: "start game"
+        size_hint: None, None
+        pos: root.width / 2.0 - self.size[0] / 2.0, root.height / 2.0 - self.size[1] / 2.0
+        on_release:
+            self.disabled = True
+            self.opacity = 0
+            app.start_game()
+    Button:
+        id: quit_button
+        text: "quit game"
+        size_hint: None, None
+        pos: root.width / 2.0 - self.size[0] / 2.0, root.height / 2.0 - 3 * self.size[1] / 2.0
+        on_release:
+            app.stop()
+    Label:
+        id: score
+        size_hint_y: None
+        height: root.height * 2 - 64
+        text: "0"
+        font_size: 40
+    Player:
+        source: "assets/player.png"
+        size_hint: None, None
+        size: 32, 32
+        pos: root.width / 2.0 - 16, 16
+        id: player
