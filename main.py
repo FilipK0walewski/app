@@ -3,7 +3,7 @@
 from kivy.app import App
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
-# from kivy.core.audio import SoundLoader
+from kivy.core.audio import SoundLoader
 # from kivy.uix.widget import Widget
 from kivy.uix.button import Button
 from kivy.core.window import Window
@@ -35,6 +35,8 @@ class MenelApp(App):
     question = None
     correct = None
     time = True
+    win_sound = SoundLoader.load('cudownie.wav')
+    lose_sound = SoundLoader.load('lose.wav')
 
     def start_game(self):
         self.menu_animation_0()
@@ -117,19 +119,25 @@ class MenelApp(App):
         self.root.add_widget(self.down_layout)
 
     def get_question(self, *args):
-        self.reset_buttons()
-        self.question = random.choice(self.questions)
-        temp = [2, 3, 4, 5]
-        i = 0
-        for button in self.buttons:
-            button.disabled = False
-            i = random.choice(temp)
-            temp.remove(i)
-            button.text += self.question[i]
 
-        self.root.ids.q.text = self.question[0]
-        self.root.ids.timer.text = '30'
-        self.animate_the_label()
+        if len(self.questions) == 0:
+            self.root.ids.timer.text = ''
+            self.root.ids.q.text = 'Fajny jesteś'
+            self.animate_the_label()
+        else:
+            self.reset_buttons()
+            self.question = random.choice(self.questions)
+            temp = [2, 3, 4, 5]
+            i = 0
+            for button in self.buttons:
+                button.disabled = False
+                i = random.choice(temp)
+                temp.remove(i)
+                button.text += self.question[i]
+
+            self.root.ids.q.text = self.question[0]
+            self.root.ids.timer.text = '30'
+            self.animate_the_label()
         # self.animate_grid()
         # self.root.ids.q.text = self.question[0]
 
@@ -155,9 +163,11 @@ class MenelApp(App):
                     self.questions.remove(self.question)
                     self.correct = True
                     self.animate_the_button(button)
+                    self.win_sound.play()
                 else:
                     self.correct = False
                     self.animate_the_button(button)
+                    self.lose_sound.play()
 
     def game_over_0(self, *args):
         anim = Animation(opacity=0, duration=2)
@@ -213,7 +223,11 @@ class MenelApp(App):
 
     def animate_the_label(self):
         anim = Animation(opacity=1, duration=2)
-        anim.bind(on_complete=self.animate_grid)
+        if self.root.ids.q.text == 'Fajny jesteś':
+            self.correct = False
+            anim.bind(on_complete=self.game_over_0)
+        else:
+            anim.bind(on_complete=self.animate_grid)
         anim.start(self.root.ids.q)
         anim.start(self.root.ids.timer)
 

@@ -1,4 +1,9 @@
 FloatLayout:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: 'background.png'
     Button:
         id: start_button
         text: "start game"
