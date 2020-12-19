@@ -6,9 +6,7 @@ FloatLayout:
         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
         on_release:
             self.disabled = True
-            self.opacity = 0
             quit_button.disabled = True
-            quit_button.opacity = 0
             app.start_game()
     Button:
         id: quit_button
@@ -17,12 +15,19 @@ FloatLayout:
         pos_hint: {'center_x': 0.5, 'center_y': 0.3}
         on_release:
             self.disabled = True
-            self.opacity = 0
             app.stop()
     Label:
         id: q
         text: 'Pierdolnikerzy'
         font_name: 'Aleo-Regular.otf'
-        font_size: self.height / 4
+        font_size: '40sp'
+        size_hint: (None, 0.2)
+        pos_hint: {'center_x': 0.5, 'y': 0.65}
+    Label:
+        id: timer
+        text: '30'
+        opacity: 0
+        font_name: 'Aleo-Regular.otf'
+        font_size: 25
         size_hint: (1, 0.17)
-        pos_hint: {'x': 0, 'y': 0.7}
+        pos_hint: {'x_center': 0.5, 'y': 0.85}
