@@ -27,10 +27,11 @@ class MenelApp(App):
     btn4 = None
     btn5 = None
     label = None
-    yellow = [255 / 255.0, 173 / 255.0, 1 / 255.0, 1.0]
-    blue = [0, 0, 1, 1]
+    # font_color = [238 / 255.0, 186 / 255.0, 184 / 255.0, 1]
+    button_color = [41 / 255.0, 0 / 255.0, 0 / 255.0, 1.0]
+    yellow = [205 / 255.0, 125 / 255.0, 49 / 255.0, 1.0]
     green = [126 / 255.0, 200 / 255.0, 80 / 255.0, 1]
-    red = [1, 0, 0, 1]
+    red = [197 / 255.0, 44 / 255.0, 49 / 255.0, 1]
     questions = []
     question = None
     correct = None
@@ -99,13 +100,13 @@ class MenelApp(App):
         for button in self.buttons:
             button.background_down = ''
             button.background_normal = ''
-            button.background_color = self.blue
+            button.background_color = self.red
             button.font_name = 'Aleo-Regular.otf'
             button.background_disabled_normal = ''
 
-        self.btn5 = Button(text="confirm", on_release=self.check_answer, background_color=[0, 0, 1, 1],
-                           size_hint=(0.5, None), pos_hint={'x': 0.25, 'y': 0.02}, font_name='Aleo-Regular.otf',
-                           disabled=True, opacity=0)
+        self.btn5 = Button(text="confirm", on_release=self.check_answer, background_normal='',
+                           background_color=self.button_color, size_hint=(0.5, None), pos_hint={'x': 0.25, 'y': 0.02},
+                           font_name='Aleo-Regular.otf', disabled=True, opacity=0)
 
         self.down_layout.add_widget(self.btn1)
         self.down_layout.add_widget(self.btn2)
@@ -142,7 +143,7 @@ class MenelApp(App):
         # self.root.ids.q.text = self.question[0]
 
     def answer_pressed(self, instance):
-        anim0 = Animation(background_color=self.blue, duration=0.5)
+        anim0 = Animation(background_color=self.button_color, duration=0.5)
         for button in self.buttons:
             anim0.start(button)
 
@@ -199,7 +200,7 @@ class MenelApp(App):
         for button in self.buttons:
             temp = button.text[0:3]
             button.text = temp
-            button.background_color = self.blue
+            button.background_color = self.button_color
 
     def read_file(self, filename):
         with open(os.path.join(filename), encoding='utf8') as data:
@@ -215,7 +216,7 @@ class MenelApp(App):
 
         anim = Animation(background_color=color, duration=0.1)
         for i in range(3):
-            anim += Animation(background_color=self.blue, duration=0.5)
+            anim += Animation(background_color=self.button_color, duration=0.5)
             anim += Animation(background_color=color, duration=0.5)
 
         anim.bind(on_complete=self.game_over_0)

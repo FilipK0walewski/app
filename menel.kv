@@ -7,8 +7,10 @@ FloatLayout:
     Button:
         id: start_button
         text: "start game"
-        size_hint: .2, .2
+        size_hint: .4, .2
         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        background_normal: ''
+        background_color: app.button_color
         on_release:
             self.disabled = True
             quit_button.disabled = True
@@ -16,8 +18,10 @@ FloatLayout:
     Button:
         id: quit_button
         text: "exit game"
-        size_hint: .2, .2
-        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+        size_hint: .4, .2
+        pos_hint: {'center_x': 0.5, 'center_y': 0.28}
+        background_normal: ''
+        background_color: app.button_color
         on_release:
             self.disabled = True
             app.stop()
